@@ -1,11 +1,18 @@
-FROM ubuntu:13.10
-RUN apt-get update
-RUN apt-get install -y mono-devel
+FROM ubuntu:14.04
 
-RUN apt-get install -y libtool autoconf g++ gettext make git
-RUN git clone https://github.com/mono/mono
-RUN cd mono && \ 
+RUN apt-get update && apt-get install -y \
+    mono-devel \
+    libtool \
+    autoconf \
+    g++ \
+    gettext \
+    make \
+    git
+
+RUN git clone https://github.com/mono/mono && \
+    cd mono && \ 
     ./autogen.sh   --prefix /usr && \
     make get-monolite-latest && \
     make && \
-    make install
+    make install && \
+    cd / && rm -rf mono
